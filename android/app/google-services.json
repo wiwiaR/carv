@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "995583411718",
+    "project_id": "carv-8d432",
+    "storage_bucket": "carv-8d432.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:995583411718:android:3e09a0c1c727a72627a587",
+        "android_client_info": {
+          "package_name": "com.example.teste"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "995583411718-e1osfphuvi19mt2bo5dsbq60rob0uplc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPb_5udoqPZQkHXxQDmCjOGqnSUuKdoFg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "995583411718-e1osfphuvi19mt2bo5dsbq60rob0uplc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
