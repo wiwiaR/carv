@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
 import 'side_menu.dart';
@@ -13,7 +14,31 @@ class FormNovoMovimento extends StatefulWidget {
 
 class _FormNovoMovimentoState extends State<FormNovoMovimento> {
   final DateTime _now = DateTime.now();
+  final TextEditingController _placaController = TextEditingController();
+  final TextEditingController _kmSaidaController = TextEditingController();
+  final TextEditingController _hrSaidaController = TextEditingController();
+  final TextEditingController _tecnicoController = TextEditingController();
+
   String botao = 'Registrar';
+  bool salvo = false;
+  bool statusBotao = true;
+  var _idMovimento;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _hrSaidaController.text = DateFormat.Hm().format(_now);
+  }
+
+  @override
+  void dispose() {
+    _placaController.dispose();
+    _kmSaidaController.dispose();
+    _hrSaidaController.dispose();
+    _tecnicoController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +64,8 @@ class _FormNovoMovimentoState extends State<FormNovoMovimento> {
               child: Image.asset('assets/images/carro.jpg'),
             ),
             TextFormField(
+              enabled: statusBotao,
+              controller: _placaController,
               decoration: const InputDecoration(
                 labelText: 'Placa',
               ),
@@ -47,17 +74,22 @@ class _FormNovoMovimentoState extends State<FormNovoMovimento> {
               ),
             ),
             TextFormField(
-              initialValue: DateFormat.Hm().format(_now),
+              enabled: statusBotao,
+              controller: _hrSaidaController,
               decoration: const InputDecoration(
                 labelText: 'Hora de saída',
               ),
             ),
             TextFormField(
+              enabled: statusBotao,
+              controller: _kmSaidaController,
               decoration: const InputDecoration(
                 labelText: 'Quilometragem de saída',
               ),
             ),
             TextFormField(
+              enabled: statusBotao,
+              controller: _tecnicoController,
               decoration: const InputDecoration(
                 labelText: 'Técnico',
               ),
@@ -67,6 +99,9 @@ class _FormNovoMovimentoState extends State<FormNovoMovimento> {
               child: ElevatedButton(
                 onPressed: () {
                   setState(() {
+                    salvarArquivo();
+                    salvo = true;
+                    statusBotao = !statusBotao;
                     if (botao == 'Registrar') {
                       botao = 'Editar';
                     } else {
@@ -81,5 +116,38 @@ class _FormNovoMovimentoState extends State<FormNovoMovimento> {
         ),
       ),
     );
+  }
+
+  Future salvarArquivo() async {
+    final placa = _placaController.text;
+    final hrSaida = _hrSaidaController.text;
+    final kmSaida = _kmSaidaController.text;
+    final tecnico = _tecnicoController.text;
+
+    if (salvo == false) {
+      final novoDoc = FirebaseFirestore.instance.collection('movimentos').doc();
+
+      final json = {
+        'placa': placa,
+        'hr_saida': hrSaida,
+        'km_saida': kmSaida,
+        'tecnico': tecnico
+      };
+
+      await novoDoc.set(json);
+      _idMovimento = novoDoc.id;
+    } else {
+      final editDoc =
+          FirebaseFirestore.instance.collection('movimentos').doc(_idMovimento);
+
+      final json = {
+        'placa': placa,
+        'hr_saida': hrSaida,
+        'km_saida': kmSaida,
+        'tecnico': tecnico
+      };
+
+      await editDoc.update(json);
+    }
   }
 }
