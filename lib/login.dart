@@ -109,6 +109,13 @@ class _PageLoginState extends State<PageLogin> {
         email: emailController.text.trim(),
         password: senhaController.text.trim(),
       );
-    } on FirebaseAuthException catch (e) {}
+    } on FirebaseAuthException catch (e) {
+      AlertDialog(
+        title: const Text('Erro'),
+        content: Text(
+          'Ocorreu o seguinte erro: ${e.message}',
+        ),
+      );
+    }
   }
 }
