@@ -65,6 +65,7 @@ class _FormNovoMovimentoState extends State<FormNovoMovimento> {
             ),
             TextFormField(
               enabled: statusBotao,
+              textCapitalization: TextCapitalization.characters,
               controller: _placaController,
               decoration: const InputDecoration(
                 labelText: 'Placa',
@@ -88,6 +89,7 @@ class _FormNovoMovimentoState extends State<FormNovoMovimento> {
               ),
             ),
             TextFormField(
+              textCapitalization: TextCapitalization.words,
               enabled: statusBotao,
               controller: _tecnicoController,
               decoration: const InputDecoration(
@@ -131,7 +133,8 @@ class _FormNovoMovimentoState extends State<FormNovoMovimento> {
         'placa': placa,
         'hr_saida': hrSaida,
         'km_saida': kmSaida,
-        'tecnico': tecnico
+        'tecnico': tecnico,
+        'status': false
       };
 
       await novoDoc.set(json);
@@ -144,7 +147,8 @@ class _FormNovoMovimentoState extends State<FormNovoMovimento> {
         'placa': placa,
         'hr_saida': hrSaida,
         'km_saida': kmSaida,
-        'tecnico': tecnico
+        'tecnico': tecnico,
+        'status': false
       };
 
       await editDoc.update(json);
