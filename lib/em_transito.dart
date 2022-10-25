@@ -6,7 +6,18 @@ class EmTransito extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CardTransito();
+    if (ModalRoute.of(context)!.settings.name == 'transito') {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Em trânsito'),
+        ),
+        body: CardTransito(),
+      );
+    } else {
+      return Scaffold(
+        body: CardTransito(),
+      );
+    }
   }
 }
 
@@ -20,89 +31,89 @@ class CardTransito extends StatelessWidget {
     return StreamBuilder<QuerySnapshot>(
       stream: db.snapshots(),
       builder: (context, snapshot) {
-        return (snapshot.connectionState == ConnectionState.waiting)
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : ListView.builder(
-                itemCount: snapshot.data!.docs.length,
-                itemBuilder: ((context, index) {
-                  //var carro = snapshot.data!.docs.map((e) => e.data()).toList();
-                  DocumentSnapshot documentSnapshot =
-                      snapshot.data!.docs[index];
+        if (!snapshot.hasData) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          return ListView.builder(
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: ((context, index) {
+              DocumentSnapshot documentSnapshot = snapshot.data!.docs[index];
 
-                  if (!snapshot.hasData) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else {
-                    return ListView(
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Container(
-                            width: 100,
-                            height: 100,
-                            decoration: BoxDecoration(
-                              color: Colors.blue[50],
+              if (!snapshot.hasData) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                return ListView(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Container(
+                        width: 100,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          color: Colors.blue[50],
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Image.asset(
+                                'assets/images/carro.jpg',
+                                width: 100,
+                                height: 100,
+                                fit: BoxFit.fill,
+                              ),
                             ),
-                            child: Row(
+                            Column(
                               mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.all(10),
-                                  child: Image.asset(
-                                    'assets/images/carro.jpg',
-                                    width: 100,
-                                    height: 100,
-                                    fit: BoxFit.fill,
+                                  child: Text(
+                                    documentSnapshot["placa"]
+                                        .toString()
+                                        .toUpperCase(),
+                                    style: const TextStyle(
+                                      fontSize: 24,
+                                    ),
                                   ),
-                                ),
-                                Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(10),
-                                      child: Text(
-                                        documentSnapshot["placa"]
-                                            .toString()
-                                            .toUpperCase(),
-                                        style: const TextStyle(
-                                          fontSize: 24,
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(10),
-                                      child: Text(documentSnapshot["tecnico"]
-                                          .toString()),
-                                    ),
-                                  ],
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.all(10),
-                                  child: IconButton(
-                                    onPressed: () {
-                                      Navigator.popAndPushNamed(
-                                          context, 'home');
-                                    },
-                                    icon: const Icon(Icons.arrow_forward_ios),
-                                  ),
+                                  child: Text(
+                                      documentSnapshot["tecnico"].toString()),
                                 ),
                               ],
                             ),
-                          ),
+                            Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: IconButton(
+                                onPressed: () {
+                                  Navigator.popAndPushNamed(
+                                      context, 'movimentos');
+                                },
+                                icon: const Icon(Icons.arrow_forward_ios),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    );
-                  }
-                }),
-              );
+                      ),
+                    ),
+                  ],
+                );
+              }
+            }),
+          );
+        }
       },
     );
   }

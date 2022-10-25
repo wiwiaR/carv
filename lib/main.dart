@@ -11,6 +11,7 @@ import 'novo_movimento.dart';
 import 'fim_movimento.dart';
 import 'auth.dart';
 import 'registro.dart';
+import 'movimentos.dart';
 
 import 'package:flutter/material.dart';
 
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
         'concluido': (context) => const Concluidos(),
         'novo': ((context) => const FormNovoMovimento()),
         'fim': (context) => const FormEncerraMovimento(),
+        'movimentos': (context) => Movimentos(),
       },
     );
   }
