@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -49,11 +43,22 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyA_2w293AtGYvEt3wu9DRArSxj6afLQKIE',
+    appId: '1:995583411718:web:2d3b6411ce630e9327a587',
+    messagingSenderId: '995583411718',
+    projectId: 'carv-8d432',
+    authDomain: 'carv-8d432.firebaseapp.com',
+    databaseURL: 'https://carv-8d432-default-rtdb.firebaseio.com',
+    storageBucket: 'carv-8d432.appspot.com',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBPb_5udoqPZQkHXxQDmCjOGqnSUuKdoFg',
     appId: '1:995583411718:android:3e09a0c1c727a72627a587',
     messagingSenderId: '995583411718',
     projectId: 'carv-8d432',
+    databaseURL: 'https://carv-8d432-default-rtdb.firebaseio.com',
     storageBucket: 'carv-8d432.appspot.com',
   );
 
@@ -62,6 +67,18 @@ class DefaultFirebaseOptions {
     appId: '1:995583411718:ios:a70b2c217dbc7c8027a587',
     messagingSenderId: '995583411718',
     projectId: 'carv-8d432',
+    databaseURL: 'https://carv-8d432-default-rtdb.firebaseio.com',
+    storageBucket: 'carv-8d432.appspot.com',
+    iosClientId: '995583411718-a1lebs5ir0jq3veiuv4a00sj0t4rgkuj.apps.googleusercontent.com',
+    iosBundleId: 'com.example.teste',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyDOKSZxaCUT7P71L__H_3zorlT8_3r9MS4',
+    appId: '1:995583411718:ios:a70b2c217dbc7c8027a587',
+    messagingSenderId: '995583411718',
+    projectId: 'carv-8d432',
+    databaseURL: 'https://carv-8d432-default-rtdb.firebaseio.com',
     storageBucket: 'carv-8d432.appspot.com',
     iosClientId: '995583411718-a1lebs5ir0jq3veiuv4a00sj0t4rgkuj.apps.googleusercontent.com',
     iosBundleId: 'com.example.teste',

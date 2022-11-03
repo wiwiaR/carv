@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'side_menu.dart';
+import '../components/side_menu.dart';
 import 'package:intl/intl.dart';
 
 class FormEncerraMovimento extends StatefulWidget {

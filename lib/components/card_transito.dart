@@ -1,33 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class EmTransito extends StatelessWidget {
-  const EmTransito({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    if (ModalRoute.of(context)!.settings.name == 'transito') {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text('Em trânsito'),
-        ),
-        body: CardTransito(),
-      );
-    } else {
-      return Scaffold(
-        body: CardTransito(),
-      );
-    }
-  }
-}
-
 class CardTransito extends StatelessWidget {
-  CardTransito({super.key});
+  CardTransito({super.key, required this.status});
 
-  final db = FirebaseFirestore.instance.collection('movimentos');
+  final String status;
+
+  final carro = FirebaseFirestore.instance.collection('veiculo');
 
   @override
   Widget build(BuildContext context) {
+    final db = FirebaseFirestore.instance
+        .collection('movimentos')
+        .where('status', isEqualTo: status);
+
     return StreamBuilder<QuerySnapshot>(
       stream: db.snapshots(),
       builder: (context, snapshot) {
@@ -76,16 +62,9 @@ class CardTransito extends StatelessWidget {
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(10),
-                                  child: Text(
-                                    documentSnapshot["placa"]
-                                        .toString()
-                                        .toUpperCase(),
-                                    style: const TextStyle(
-                                      fontSize: 24,
-                                    ),
-                                  ),
+                                const Padding(
+                                  padding: EdgeInsets.all(10),
+                                  child: Text(''),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.all(10),
@@ -98,8 +77,10 @@ class CardTransito extends StatelessWidget {
                               padding: const EdgeInsets.all(10),
                               child: IconButton(
                                 onPressed: () {
-                                  Navigator.popAndPushNamed(
-                                      context, 'movimentos');
+                                  Navigator.pushNamed(
+                                    context,
+                                    'movimentos',
+                                  );
                                 },
                                 icon: const Icon(Icons.arrow_forward_ios),
                               ),

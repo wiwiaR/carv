@@ -1,119 +1,265 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:flutter/material.dart';
 
-class EmTransito extends StatelessWidget {
-    const EmTransito({ super.key });
+// class EmTransito extends StatelessWidget {
+//     const EmTransito({ super.key });
 
-    @override
-  Widget build(BuildContext context) {
-        if (ModalRoute.of(context)!.settings.name == 'transito') {
-            return Scaffold(
-                appBar: AppBar(
-                    title: const Text('Em trânsito'),
-        ),
-            body: CardTransito(),
-      );
-        } else {
-            return Scaffold(
-                body: CardTransito(),
-            );
-        }
-    }
-}
+//     @override
+//   Widget build(BuildContext context) {
+//         if (ModalRoute.of(context)!.settings.name == 'transito') {
+//             return Scaffold(
+//                 appBar: AppBar(
+//                     title: const Text('Em trânsito'),
+//         ),
+//             body: CardTransito(),
+//       );
+//         } else {
+//             return Scaffold(
+//                 body: CardTransito(),
+//             );
+//         }
+//     }
+// }
 
-class CardTransito extends StatelessWidget {
-    CardTransito({ super.key });
+// class CardTransito extends StatelessWidget {
+//     CardTransito({ super.key });
 
-  final db = FirebaseFirestore.instance.collection('movimentos');
+//   final db = FirebaseFirestore.instance.collection('movimentos');
 
-    @override
-  Widget build(BuildContext context) {
-        return StreamBuilder < QuerySnapshot > (
-            stream: db.snapshots(),
-                builder: (context, snapshot) {
-                    return (snapshot.connectionState == ConnectionState.waiting)
-                        ? const Center(
-                            child: CircularProgressIndicator(),
-              )
-            : ListView.builder(
-                                itemCount: snapshot.data!.docs.length,
-                                itemBuilder: ((context, index) {
-                  DocumentSnapshot documentSnapshot =
-                                        snapshot.data!.docs[index];
+//     @override
+//   Widget build(BuildContext context) {
+//         return StreamBuilder < QuerySnapshot > (
+//             stream: db.snapshots(),
+//                 builder: (context, snapshot) {
+//                     return (snapshot.connectionState == ConnectionState.waiting)
+//                         ? const Center(
+//                             child: CircularProgressIndicator(),
+//               )
+//             : ListView.builder(
+//                                 itemCount: snapshot.data!.docs.length,
+//                                 itemBuilder: ((context, index) {
+//                   DocumentSnapshot documentSnapshot =
+//                                         snapshot.data!.docs[index];
 
-                                    if (!snapshot.hasData) {
-                                        return const Center(
-                                            child: CircularProgressIndicator(),
-                    );
-                } else {
-            return ListView(
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                children: [
-                Padding(
-                    padding: const EdgeInsets.all(10),
-                        child: Container(
-                            width: 100,
-                            height: 100,
-                            decoration: BoxDecoration(
-                                color: Colors.blue[50],
-                            ),
-                            child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                Padding(
-                                    padding: const EdgeInsets.all(10),
-                                        child: Image.asset(
-                                            'assets/images/carro.jpg',
-                                            width: 100,
-                                            height: 100,
-                                            fit: BoxFit.fill,
-                                        ),
-                                ),
-            Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                Padding(
-                    padding: const EdgeInsets.all(10),
-                        child: Text(
-                            documentSnapshot["placa"]
-                                .toString()
-                                .toUpperCase(),
-                            style: const TextStyle(
-                                fontSize: 24,
-                            ),
-                                      ),
-                                    ),
-            Padding(
-                padding: const EdgeInsets.all(10),
-                    child: Text(documentSnapshot["tecnico"]
-                        .toString()),
-                                    ),
-                                  ],
-                                ),
-            Padding(
-                padding: const EdgeInsets.all(10),
-                    child: IconButton(
-                        onPressed: () {
-                            Navigator.popAndPushNamed(
-                                context, 'movimentos');
-                        },
-                        icon: const Icon(Icons.arrow_forward_ios),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    );
-        }
-    }),
-              );
-},
-    );
-  }
-}
+//                                     if (!snapshot.hasData) {
+//                                         return const Center(
+//                                             child: CircularProgressIndicator(),
+//                     );
+//                 } else {
+//             return ListView(
+//                 padding: EdgeInsets.zero,
+//                 shrinkWrap: true,
+//                 scrollDirection: Axis.vertical,
+//                 children: [
+//                 Padding(
+//                     padding: const EdgeInsets.all(10),
+//                         child: Container(
+//                             width: 100,
+//                             height: 100,
+//                             decoration: BoxDecoration(
+//                                 color: Colors.blue[50],
+//                             ),
+//                             child: Row(
+//                                 mainAxisSize: MainAxisSize.max,
+//                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                 children: [
+//                                 Padding(
+//                                     padding: const EdgeInsets.all(10),
+//                                         child: Image.asset(
+//                                             'assets/images/carro.jpg',
+//                                             width: 100,
+//                                             height: 100,
+//                                             fit: BoxFit.fill,
+//                                         ),
+//                                 ),
+//             Column(
+//                 mainAxisSize: MainAxisSize.max,
+//                 mainAxisAlignment: MainAxisAlignment.start,
+//                 children: [
+//                 Padding(
+//                     padding: const EdgeInsets.all(10),
+//                         child: Text(
+//                             documentSnapshot["placa"]
+//                                 .toString()
+//                                 .toUpperCase(),
+//                             style: const TextStyle(
+//                                 fontSize: 24,
+//                             ),
+//                                       ),
+//                                     ),
+//             Padding(
+//                 padding: const EdgeInsets.all(10),
+//                     child: Text(documentSnapshot["tecnico"]
+//                         .toString()),
+//                                     ),
+//                                   ],
+//                                 ),
+//             Padding(
+//                 padding: const EdgeInsets.all(10),
+//                     child: IconButton(
+//                         onPressed: () {
+//                             Navigator.popAndPushNamed(
+//                                 context, 'movimentos');
+//                         },
+//                         icon: const Icon(Icons.arrow_forward_ios),
+//                                   ),
+//                                 ),
+//                               ],
+//                             ),
+//                           ),
+//                         ),
+//                       ],
+//                     );
+//         }
+//     }),
+//               );
+// },
+//     );
+//   }
+// }
+
+
+
+// /////////////////////////////////
+
+
+
+
+
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:flutter/material.dart';
+
+// class Movimentos extends StatelessWidget {
+//   Movimentos({super.key});
+
+//   final db = FirebaseFirestore.instance.collection('movimentos');
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Movimentos do veículo'),
+//         leading: IconButton(
+//           icon: const Icon(Icons.arrow_back),
+//           onPressed: () {
+//             Navigator.pop(context, false);
+//           },
+//         ),
+//       ),
+//       body: Transito(db: db), // AccountDrawer
+//     );
+//   }
+// }
+
+// class ReferenceArgument {
+//   final DocumentReference id;
+
+//   ReferenceArgument(this.id);
+// }
+
+// class Transito extends StatelessWidget {
+//   Transito({
+//     Key? key,
+//     required this.db,
+//   }) : super(key: key);
+
+//   final CollectionReference<Map<String, dynamic>> db;
+
+//   final TextEditingController placaController = TextEditingController();
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final ReferenceArgument idCarro =
+//         ModalRoute.of(context)!.settings.arguments as ReferenceArgument;
+
+//     return Column(
+//       crossAxisAlignment: CrossAxisAlignment.center,
+//       children: [
+//         Padding(
+//           padding: const EdgeInsets.all(10),
+//           child: Image.asset(
+//             'assets/images/carro.jpg',
+//             width: 200,
+//             height: 100,
+//             fit: BoxFit.fill,
+//           ),
+//         ),
+//         Padding(
+//           padding:
+//               const EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 10),
+//           child: SizedBox(
+//             width: double.infinity,
+//             height: 30,
+//             child: Text(idCarro.toString()),
+//           ),
+//         ),
+//         Padding(
+//           padding: const EdgeInsets.only(left: 25, right: 25),
+//           child: SizedBox(
+//             width: double.infinity,
+//             height: 30,
+//             child: Text(idCarro.toString()),
+//           ),
+//         ),
+//         const Padding(
+//           padding: EdgeInsets.only(left: 15, right: 15),
+//           child: Divider(
+//             thickness: 2.0,
+//           ),
+//         ),
+//         StreamBuilder<QuerySnapshot>(
+//           stream: db.snapshots(),
+//           builder: (context, snapshot) {
+//             return (snapshot.connectionState == ConnectionState.waiting)
+//                 ? const Center(
+//                     child: CircularProgressIndicator(),
+//                   )
+//                 : ListView.builder(
+//                     itemCount: snapshot.data!.docs.length,
+//                     itemBuilder: ((context, index) {
+//                       // DocumentSnapshot documentSnapshot =
+//                       //     snapshot.data!.docs[index];
+
+//                       if (!snapshot.hasData) {
+//                         return const Center(
+//                           child: CircularProgressIndicator(),
+//                         );
+//                       } else {
+//                         return ListView(
+//                           padding: EdgeInsets.zero,
+//                           shrinkWrap: true,
+//                           scrollDirection: Axis.vertical,
+//                           children: [
+//                             Padding(
+//                               padding: const EdgeInsets.all(10),
+//                               child: Container(
+//                                 width: 100,
+//                                 height: 100,
+//                                 decoration: BoxDecoration(
+//                                   color: Colors.blue[50],
+//                                 ),
+//                                 child: Row(
+//                                   mainAxisSize: MainAxisSize.max,
+//                                   mainAxisAlignment:
+//                                       MainAxisAlignment.spaceBetween,
+//                                   children: [
+//                                     Container(
+//                                       color: Colors.blue,
+//                                       width: 200,
+//                                       height: 100,
+//                                     ),
+//                                   ],
+//                                 ),
+//                               ),
+//                             ),
+//                           ],
+//                         );
+//                       }
+//                     }),
+//                   );
+//           },
+//         ),
+//       ],
+//     );
+//   }
+// }

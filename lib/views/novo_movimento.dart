@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
-import 'side_menu.dart';
+import '../components/side_menu.dart';
 
 import 'package:flutter/material.dart';
 
@@ -134,7 +134,7 @@ class _FormNovoMovimentoState extends State<FormNovoMovimento> {
         'hr_saida': hrSaida,
         'km_saida': kmSaida,
         'tecnico': tecnico,
-        'status': false
+        'status': 'incompleto'
       };
 
       await novoDoc.set(json);
@@ -148,7 +148,7 @@ class _FormNovoMovimentoState extends State<FormNovoMovimento> {
         'hr_saida': hrSaida,
         'km_saida': kmSaida,
         'tecnico': tecnico,
-        'status': false
+        'status': 'incompleto'
       };
 
       await editDoc.update(json);

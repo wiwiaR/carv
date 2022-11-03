@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import '../backend/auth.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({

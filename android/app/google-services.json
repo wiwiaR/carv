@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "995583411718",
+    "firebase_url": "https://carv-8d432-default-rtdb.firebaseio.com",
     "project_id": "carv-8d432",
     "storage_bucket": "carv-8d432.appspot.com"
   },
@@ -29,6 +30,13 @@
             {
               "client_id": "995583411718-e1osfphuvi19mt2bo5dsbq60rob0uplc.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "995583411718-a1lebs5ir0jq3veiuv4a00sj0t4rgkuj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.teste"
+              }
             }
           ]
         }
